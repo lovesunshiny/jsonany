@@ -71,22 +71,18 @@ class any
 		}
 
     	template<typename U, class = typename std::enable_if<!std::is_same<typename std::decay<U>::type, any>::value, U>::type> 
-		std::string dump(U && value) {
-			auto m_ptr = new Derived<typename std::decay<U>::type>(forward<U>(value));
-        	auto m_tpIndex = type_index(typeid(typename std::decay<U>::type));
-			// cout << typeid(U).name() << " to " << m_tpIndex.name() << endl;
-			//auto derived = dynamic_cast<Derived<U>*> (m_ptr->get());
-			return to_json_string(m_ptr->m_value);
+		static inline std::string dump(U && value) {
+			auto ptr = new Derived<typename std::decay<U>::type>(forward<U>(value));
+        	//auto m_tpIndex = type_index(typeid(typename std::decay<U>::type));
+			return to_json_string(ptr->m_value);
 		}
 
 		template<typename U, class = typename std::enable_if<!std::is_same<typename std::decay<U>::type, any>::value, U>::type>
-		U& parse(U && value,  std::string_view json_str) {
-			auto m_ptr = new Derived<typename std::decay<U>::type>(forward<U>(value));
-        	auto m_tpIndex = type_index(typeid(typename std::decay<U>::type));
-			// cout << typeid(U).name() << " to " << m_tpIndex.name() << endl;
-			//auto derived = dynamic_cast<Derived<U>*> (m_ptr->get());
-			from_json_string(m_ptr->m_value, json_str);
-			return m_ptr->m_value;
+		static inline U& parse(U && value,  std::string json_str) {
+			auto ptr = new Derived<typename std::decay<U>::type>(forward<U>(value));
+        	//auto m_tpIndex = type_index(typeid(typename std::decay<U>::type));
+			from_json_string(ptr->m_value, json_str);
+			return ptr->m_value;
 		}
 
 		any& operator=(const any& other)

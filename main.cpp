@@ -88,11 +88,11 @@ int main()
 	Person p1{"p1", 4, addr1, {f1, f2, f3}, string("the kind!")};
 
 	json::any a;
-	auto json = a.dump(p1);
+	auto json = json::any::dump(p1);
 	std::cout << json << std::endl;
 	//std::cout << p1 << std::endl;
 	Person ps;
-	auto pp = a.parse(ps ,json);
+	auto pp = json::any::parse(ps ,json);
 	if(p1 == pp) {
 		std::cout << "Successful !!!" << std::endl;
 	}
