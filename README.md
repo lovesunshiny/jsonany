@@ -1,9 +1,11 @@
 ﻿# Quick start:
 
-## mkdir build && cd build
-## cmake ..
-## make
-## ./jsonany
+```shell
+ mkdir build && cd build
+ cmake ..
+ make
+ ./jsonany
+```
 
 # Reference
 ```
